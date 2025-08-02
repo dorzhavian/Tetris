@@ -1,4 +1,5 @@
 #pragma once
+#include "tetromino.h"
 
 const int ROWS = 20;
 const int COLS = 10;
@@ -9,4 +10,5 @@ private:
 public:
     Board();
     void draw();
+    void placeTetromino(const Tetromino& t);
 };

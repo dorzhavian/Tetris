@@ -24,3 +24,11 @@ void Board::draw() {
     for (int j = 0; j < COLS; j++) cout << "-";
     cout << "+\n";
 }
+
+void Board::placeTetromino(const Tetromino& t) {
+    for (auto& block : t.getBlocks()) {
+        if (block.x >= 0 && block.x < ROWS && block.y >= 0 && block.y < COLS) {
+            grid[block.x][block.y] = '#';
+        }
+    }
+}
