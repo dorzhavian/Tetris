@@ -3,6 +3,10 @@
 using namespace std;
 
 Board::Board() {
+    clear();
+}
+
+void Board::clear() {
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
             grid[i][j] = ' ';

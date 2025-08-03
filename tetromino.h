@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 
 struct Point {
@@ -13,4 +12,5 @@ private:
 public:
     Tetromino(char s = '#');
     const std::vector<Point>& getBlocks() const;
+    void moveDown();
 };

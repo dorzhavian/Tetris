@@ -9,6 +9,7 @@ private:
     char grid[ROWS][COLS];
 public:
     Board();
+    void clear();
     void draw();
     void placeTetromino(const Tetromino& t);
 };
