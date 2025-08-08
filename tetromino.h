@@ -13,4 +13,8 @@ public:
     Tetromino(char s = '#');
     const std::vector<Point>& getBlocks() const;
     void moveDown();
+    void moveLeft();
+    void moveRight();
+    bool canMoveLeft() const;
+    bool canMoveRight() const;
 };
