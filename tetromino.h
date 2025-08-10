@@ -17,4 +17,6 @@ public:
     void moveRight();
     bool canMoveLeft() const;
     bool canMoveRight() const;
+    void rotate();
+    bool canRotate() const;
 };

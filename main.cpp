@@ -20,6 +20,7 @@ int main() {
             if (key == 75 && t.canMoveLeft()) t.moveLeft();
             if (key == 77 && t.canMoveRight()) t.moveRight();
             if (key == 80) t.moveDown();
+            if (key == 72 && t.canRotate()) t.rotate(); // up arrow
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
