@@ -12,4 +12,9 @@ public:
     void clear();
     void draw();
     void placeTetromino(const Tetromino& t);
+    bool isCollision(const Tetromino& t) const;
+    void mergeTetromino(const Tetromino& t);
+
+    bool canPlace(const Tetromino& t) const;
+    bool canMove(const Tetromino& t, int dx, int dy) const;
 };

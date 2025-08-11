@@ -3,45 +3,69 @@
 #include <thread>
 #include <chrono>
 #include <conio.h>
+#include <iostream>
+
+static void waitForEnter() {
+    while (_kbhit()) _getch();
+    int ch;
+    do { ch = _getch(); } while (ch != 13);
+}
 
 int main() {
     Board board;
     Tetromino t;
 
-    int tick = 0;
+    if (!board.canPlace(t)) {
+        system("cls");
+        std::cout << "Game Over! Press Enter to exit...\n";
+        waitForEnter();
+        return 0;
+    }
 
-    while (true) {
-        board.clear();
-        board.placeTetromino(t);
-        board.draw();
+    int tick = 0;
+    bool gameOver = false;
+
+    while (!gameOver) {
+        Board tempBoard = board;
+        tempBoard.placeTetromino(t);
+        tempBoard.draw();
 
         if (_kbhit()) {
-            char key = _getch();
-            if (key == 75 && t.canMoveLeft()) t.moveLeft();
-            if (key == 77 && t.canMoveRight()) t.moveRight();
-            if (key == 80) t.moveDown();
-            if (key == 72 && t.canRotate()) t.rotate(); // up arrow
+            int key = _getch();
+            if (key == 0 || key == 224) key = _getch();
+
+            if (key == 75 && board.canMove(t, 0, -1)) t.moveLeft();
+            else if (key == 77 && board.canMove(t, 0, 1)) t.moveRight();
+            else if (key == 80 && board.canMove(t, 1, 0)) t.moveDown();
+            else if (key == 72) {
+                if (t.canRotate()) {
+                    t.rotate();
+                    if (!board.canPlace(t)) { t.rotate(); t.rotate(); t.rotate(); }
+                }
+            }
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        tick += 1;
+        tick++;
 
         if (tick == 5) {
             tick = 0;
-
-            bool atBottom = false;
-            for (auto& block : t.getBlocks()) {
-                if (block.x + 1 >= ROWS) {
-                    atBottom = true;
-                    break;
+            if (board.canMove(t, 1, 0)) {
+                t.moveDown();
+            }
+            else {
+                board.mergeTetromino(t);
+                t = Tetromino();
+                if (!board.canPlace(t)) {
+                    gameOver = true;
                 }
             }
-
-            if (atBottom) break;
-
-            t.moveDown();
         }
     }
 
+    system("cls");
+    board.draw();
+    std::cout << "Game Over! Press Enter to exit...\n";
+    waitForEnter();
     return 0;
 }
