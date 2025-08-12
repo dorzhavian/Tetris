@@ -71,3 +71,24 @@ bool Board::canMove(const Tetromino& t, int dx, int dy) const {
     }
     return true;
 }
+
+int Board::clearFullLines() {
+    int cleared = 0;
+    for (int r = ROWS - 1; r >= 0; --r) {
+        bool full = true;
+        for (int c = 0; c < COLS; ++c) {
+            if (grid[r][c] != '#') { full = false; break; }
+        }
+        if (full) {
+            ++cleared;
+            for (int rr = r; rr > 0; --rr) {
+                for (int c = 0; c < COLS; ++c) {
+                    grid[rr][c] = grid[rr - 1][c];
+                }
+            }
+            for (int c = 0; c < COLS; ++c) grid[0][c] = ' ';
+            r++; // re-check same row index after shifting
+        }
+    }
+    return cleared;
+}

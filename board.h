@@ -17,4 +17,6 @@ public:
 
     bool canPlace(const Tetromino& t) const;
     bool canMove(const Tetromino& t, int dx, int dy) const;
+
+    int clearFullLines();  
 };
