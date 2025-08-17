@@ -7,6 +7,7 @@ const int COLS = 10;
 class Board {
 private:
     char grid[ROWS][COLS];
+    int score;
 public:
     Board();
     void clear();
@@ -18,5 +19,7 @@ public:
     bool canPlace(const Tetromino& t) const;
     bool canMove(const Tetromino& t, int dx, int dy) const;
 
-    int clearFullLines();  
+    int clearFullLines();
+    int getScore() const;
+    void addScore(int lines);
 };

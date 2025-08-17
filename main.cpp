@@ -55,7 +55,8 @@ int main() {
             }
             else {
                 board.mergeTetromino(t);
-                board.clearFullLines();
+                int lines = board.clearFullLines();
+                if (lines > 0) board.addScore(lines);
                 t = Tetromino();
                 if (!board.canPlace(t)) {
                     gameOver = true;

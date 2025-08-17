@@ -4,6 +4,7 @@ using namespace std;
 
 Board::Board() {
     clear();
+    score = 0;
 }
 
 void Board::clear() {
@@ -16,6 +17,7 @@ void Board::clear() {
 
 void Board::draw() {
     system("cls");
+    cout << "Score: " << score << "\n\n";
     for (int i = 0; i < ROWS; i++) {
         cout << "|";
         for (int j = 0; j < COLS; j++) {
@@ -87,8 +89,19 @@ int Board::clearFullLines() {
                 }
             }
             for (int c = 0; c < COLS; ++c) grid[0][c] = ' ';
-            r++; // re-check same row index after shifting
+            r++;
         }
     }
     return cleared;
+}
+
+int Board::getScore() const {
+    return score;
+}
+
+void Board::addScore(int lines) {
+    if (lines == 1) score += 100;
+    else if (lines == 2) score += 300;
+    else if (lines == 3) score += 500;
+    else if (lines == 4) score += 800;
 }
