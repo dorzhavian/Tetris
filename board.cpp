@@ -33,7 +33,7 @@ void Board::draw() {
 void Board::placeTetromino(const Tetromino& t) {
     for (auto& block : t.getBlocks()) {
         if (block.x >= 0 && block.x < ROWS && block.y >= 0 && block.y < COLS) {
-            grid[block.x][block.y] = '#';
+            grid[block.x][block.y] = t.getSymbol();
         }
     }
 }
@@ -42,7 +42,7 @@ bool Board::isCollision(const Tetromino& t) const {
     for (auto& block : t.getBlocks()) {
         if (block.x + 1 >= ROWS) return true;
         if (block.x + 1 >= 0 && block.y >= 0 && block.y < COLS) {
-            if (grid[block.x + 1][block.y] == '#') return true;
+            if (grid[block.x + 1][block.y] != ' ') return true;
         }
     }
     return false;
@@ -51,7 +51,7 @@ bool Board::isCollision(const Tetromino& t) const {
 void Board::mergeTetromino(const Tetromino& t) {
     for (auto& block : t.getBlocks()) {
         if (block.x >= 0 && block.x < ROWS && block.y >= 0 && block.y < COLS) {
-            grid[block.x][block.y] = '#';
+            grid[block.x][block.y] = t.getSymbol();
         }
     }
 }
@@ -59,7 +59,7 @@ void Board::mergeTetromino(const Tetromino& t) {
 bool Board::canPlace(const Tetromino& t) const {
     for (auto& block : t.getBlocks()) {
         if (block.x < 0 || block.x >= ROWS || block.y < 0 || block.y >= COLS) return false;
-        if (grid[block.x][block.y] == '#') return false;
+        if (grid[block.x][block.y] != ' ') return false;
     }
     return true;
 }
@@ -69,7 +69,7 @@ bool Board::canMove(const Tetromino& t, int dx, int dy) const {
         int nx = block.x + dx;
         int ny = block.y + dy;
         if (nx < 0 || nx >= ROWS || ny < 0 || ny >= COLS) return false;
-        if (grid[nx][ny] == '#') return false;
+        if (grid[nx][ny] != ' ') return false;
     }
     return true;
 }
@@ -79,7 +79,7 @@ int Board::clearFullLines() {
     for (int r = ROWS - 1; r >= 0; --r) {
         bool full = true;
         for (int c = 0; c < COLS; ++c) {
-            if (grid[r][c] != '#') { full = false; break; }
+            if (grid[r][c] == ' ') { full = false; break; }
         }
         if (full) {
             ++cleared;
